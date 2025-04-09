@@ -1,6 +1,4 @@
-# oj-fe-b
-
-This template should help get you started developing with Vue 3 in Vite.
+# coding-arena-frontend
 
 ## Recommended IDE Setup
 
@@ -27,4 +25,3 @@ npm run dev
 ```sh
 npm run build
 ```
-# coding-arena-frontend
