@@ -38,7 +38,8 @@ const userAccount = ref('');
 const password = ref('');
 
 async function login() {
-    //拦截器先对返回的数据进行处理 axios提供的响应拦截器
+    //拦截器先对返回的数据进行处理 axios提供的响应拦截器 优化方向1
+    //优化方向2 正确结果的处理
     try {
         const loginRes = await loginService(userAccount.value,password.value);
         console.log(loginRes);
@@ -47,24 +48,6 @@ async function login() {
     } catch(error) {
         console.log(error)
     }
-
-    // //响应成功
-    // if(loginRes.status == 200) {
-    //     if(loginRes.data.code == 1000) {
-    //         //登录成功
-    //         console.log('登录成功');
-    //         setToken(loginRes.data.data);
-    //         router.push("/oj/system");
-    //     } else {
-    //         //登录失败
-    //         console.log('登录失败');
-    //         //提示用户错误原因
-    //         ElMessage.error(loginRes.data.msg);
-    //     }
-    // } else {
-    //     //响应失败
-    //     ElMessage.error('网络错误');
-    // }
 }
 
 </script>
