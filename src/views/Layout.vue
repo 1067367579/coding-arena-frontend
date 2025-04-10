@@ -13,7 +13,7 @@
                     </span>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item :icon="SwitchButton">退出登录</el-dropdown-item>
+                            <el-dropdown-item :icon="SwitchButton" @click="logout">退出登录</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -57,9 +57,10 @@ import {
     ArrowDownBold,
     SwitchButton
 } from '@element-plus/icons-vue'
-import {getAdminInfoService} from '@/apis/admin'
+import {getAdminInfoService,adminLogout} from '@/apis/admin'
 import { ref } from 'vue';
-import { ElMessage } from 'element-plus';
+import { removeToken } from '@/utils/cookie';
+import router from '@/router';
 
 const nickName = ref('');
 
@@ -74,6 +75,27 @@ const loadUserInfo = async() => {
 }
 
 loadUserInfo();
+
+const logout = async() => {
+    console.log('点击退出登录按钮')
+    await ElMessageBox.confirm(
+        '确认提示',
+        '温馨提示',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning'
+        }
+    )
+    try {
+        const result = await adminLogout();
+        console.log("结果为："+result);
+        removeToken();
+        router.push("/oj/login");
+    } catch(error) {
+        ElMessage.error(error);
+    }
+}
 </script>
 
 <style lang="scss" scoped>

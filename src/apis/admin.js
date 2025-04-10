@@ -17,3 +17,10 @@ export async function getAdminInfoService() {
         method: "get"
     })    
 }
+
+export async function adminLogout() {
+    return service({
+        url: "/sys/user/logout",
+        method: "delete"
+    })
+}

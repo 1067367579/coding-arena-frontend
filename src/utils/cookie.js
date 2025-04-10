@@ -13,6 +13,6 @@ export function setToken(token) {
 }
 
 //退出登录时要用到 删除Cookie中的值
-export function removeToken(token) {
+export function removeToken() {
     return Cookies.remove(tokenKey);
 }
