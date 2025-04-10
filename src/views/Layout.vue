@@ -57,12 +57,23 @@ import {
     ArrowDownBold,
     SwitchButton
 } from '@element-plus/icons-vue'
+import {getAdminInfoService} from '@/apis/admin'
+import { ref } from 'vue';
+import { ElMessage } from 'element-plus';
 
 const nickName = ref('');
 
+const loadUserInfo = async() => {
+    try {
+        const result = await getAdminInfoService();
+        console.log('获取对象：'+result.data.nickName);
+        nickName.value = result.data.nickName;
+    } catch(error) {
+        ElMessage.error('获取用户信息失败');
+    }
+}
 
-
-
+loadUserInfo();
 </script>
 
 <style lang="scss" scoped>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "@/utils/cookie";
 
 //不同的功能 通过axios请求的是不同接口的地址
 //后端为微服务项目 网关 127.0.0.1:19090 该项目只负责管理端 注意此处要加上http协议
@@ -21,6 +22,20 @@ service.interceptors.response.use(
         } else {
             return Promise.resolve(res.data);
         }
+    },
+    //失败回调
+    (error) => {
+        return Promise.reject(error);
+    }
+)
+
+//设置请求拦截器 发出请求之前先放令牌到请求头中
+service.interceptors.request.use(
+    (config) => { 
+        if(getToken()) {
+            config.headers["authentication"] = "Bearer "+getToken();
+        }
+        return config;
     },
     //失败回调
     (error) => {

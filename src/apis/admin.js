@@ -1,6 +1,6 @@
 import service from "@/utils/request";
 
-export default async function loginService(userAccount,password) {
+export async function loginService(userAccount,password) {
     return service({
         url: "/sys/user/login",
         method: "post",
@@ -8,5 +8,12 @@ export default async function loginService(userAccount,password) {
             userAccount: userAccount,
             password: password
         }
+    })    
+}
+
+export async function getAdminInfoService() {
+    return service({
+        url: "/sys/user/info",
+        method: "get"
     })    
 }

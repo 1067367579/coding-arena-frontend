@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import loginService from '@/apis/admin';
+import {loginService} from '@/apis/admin';
 import router from '@/router';
 import { ref } from 'vue';
 import { setToken } from '@/utils/cookie';
@@ -44,7 +44,7 @@ async function login() {
         const loginRes = await loginService(userAccount.value,password.value);
         console.log(loginRes);
         setToken(loginRes.data);
-        router.push("/oj/system");
+        router.push("/oj/layout");
     } catch(error) {
         console.log(error)
     }
