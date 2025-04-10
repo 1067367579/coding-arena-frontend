@@ -70,7 +70,7 @@ const loadUserInfo = async() => {
         console.log('获取对象：'+result.data.nickName);
         nickName.value = result.data.nickName;
     } catch(error) {
-        ElMessage.error('获取用户信息失败');
+        ElMessage.error(error.message);
     }
 }
 
