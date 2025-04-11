@@ -27,7 +27,7 @@
           <code-editor @update:value="handleEditorContent" ref="defaultCodeRef"></code-editor>
         </el-form-item>
         <el-form-item label="main函数:">
-          <code-editor @update:value="handleEditorMainFunc" ref="mainFucRef"></code-editor>
+          <code-editor @update:value="handleEditorMainFunc" ref="mainFuncRef"></code-editor>
         </el-form-item>
         <el-form-item>
           <el-button class="question-button" type="primary" plain @click="onSubmit()">发布</el-button>
@@ -54,11 +54,11 @@
     timeLimit: '',
     spaceLimit: '',
     defaultCode: '',
-    mainFuc: ''
+    mainFunc: ''
   })
   
   const defaultCodeRef = ref()
-  const mainFucRef = ref()
+  const mainFuncRef = ref()
   
   async function open(questionId) {
     visibleDrawer.value = true
@@ -70,8 +70,9 @@
     if (questionId) {
       const questionDetail = await getQuestionDetailService(questionId)
       Object.assign(formQuestion, questionDetail.data)
+      formQuestion.questionId = questionId;
       defaultCodeRef.value.setAceCode(formQuestion.defaultCode)
-      mainFucRef.value.setAceCode(formQuestion.mainFuc)
+      mainFuncRef.value.setAceCode(formQuestion.mainFunc)
     }
   }
   
@@ -95,7 +96,7 @@
       msg = '请输入题目用例名称'
     } else if (!formQuestion.defaultCode) {
       msg = '请输入默认代码'
-    } else if (!formQuestion.mainFuc) {
+    } else if (!formQuestion.mainFunc) {
       msg = '请输入main函数'
     } else {
       msg = ''
@@ -115,17 +116,21 @@
       fd.append(key, formQuestion[key])
     }
     console.log(formQuestion)
-    if (formQuestion.questionId) {
-      //编辑题目请求
-      await editQuestionService(fd)
-      ElMessage.success('编辑成功')
-      emit('success', 'edit')
-    } else {
-      await addQuestionService(fd)
-      ElMessage.success('添加成功')
-      emit('success', 'add')
+    try {
+        if (formQuestion.questionId) {
+            //编辑题目请求
+            await editQuestionService(fd)
+            ElMessage.success('编辑成功')
+            emit('success', 'edit')
+        } else {
+            await addQuestionService(fd)
+            ElMessage.success('添加成功')
+            emit('success', 'add')
+            visibleDrawer.value = false
+        }
+    } catch(error) {
+        ElMessage.error(error.message)
     }
-    visibleDrawer.value = false
   }
   
   function handleEditorContent(content) {
@@ -133,7 +138,7 @@
   }
   
   function handleEditorMainFunc(content) {
-    formQuestion.mainFuc = content
+    formQuestion.mainFunc = content
   }
   
   </script>

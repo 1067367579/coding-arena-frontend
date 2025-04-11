@@ -109,8 +109,22 @@
   }
   
   async function onDelete(questionId) {
-    await delQuestionService(questionId)
-    params.pageNum = 1
-    getQuestionList()
+    await ElMessageBox.confirm(
+            '确认提示',
+            '温馨提示',
+            {
+                confirmButtonText: '确认',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }
+    );
+    try {
+        await delQuestionService(questionId)
+        params.pageNum = 1
+        getQuestionList()
+        ElMessage.success('删除题目成功');
+    } catch(error) {
+        ElMessage.error(error.message);
+    }
   }
   </script>

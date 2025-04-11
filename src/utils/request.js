@@ -4,10 +4,11 @@ import router from "@/router";
 
 //不同的功能 通过axios请求的是不同接口的地址
 //后端为微服务项目 网关 127.0.0.1:19090 该项目只负责管理端 注意此处要加上http协议
+axios.defaults.headers["Content-Type"] = "application/json;charset=utf-8";
 const service = axios.create({
     baseURL: "/dev-api",
     timeout: 5000,
-
+    
 })
 
 //设置响应拦截器
