@@ -1,5 +1,6 @@
 import { getToken } from '@/utils/cookie'
 import { createRouter, createWebHistory } from 'vue-router'
+import '@/assets/main.scss'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
