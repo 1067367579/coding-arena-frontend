@@ -48,6 +48,14 @@ export function editExamService(data) {
         data
     })
 }
-export function delExamQuestionService() {
+export function delExamQuestionService(examId,questionId) {
+    return service({
+        url: "/sys/exam/question/delete",
+        method: "delete",
+        params: {
+            examId: examId,
+            questionId: questionId
+        }
+    })
 
 }

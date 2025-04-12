@@ -39,7 +39,7 @@
           <el-button class="exam-add-question" :icon="Plus" type="text" @click="addQuestion()">
             添加题目
           </el-button>
-          <el-table height="136px" :data="formExam.examQuestionList" class="question-select-list">
+          <el-table height="38vh" :data="formExam.examQuestionList" class="question-select-list">
             <el-table-column prop="questionId" width="180px" label="题目id" />
             <el-table-column prop="title" :show-overflow-tooltip="true" label="题目标题" />
             <el-table-column prop="difficulty" width="80px" label="题目难度">
@@ -131,7 +131,8 @@
     pageNum: 1,
     pageSize: 10,
     difficulty: '',
-    title: ''
+    title: '',
+    excludeIdSetStr: ''
   })
   
   
@@ -169,6 +170,10 @@
   const questionList = ref([])
   const total = ref(0)
   async function getQuestionList() {
+    params.excludeIdSetStr = '';
+    formExam.examQuestionList.forEach(element => {
+        params.excludeIdSetStr = params.excludeIdSetStr + element.questionId + ";"
+    })
     const result = await getQuestionListService(params)
     console.log(result)
     questionList.value = result.rows
@@ -234,7 +239,7 @@
     console.log(examQ)
     try {
         await addExamQuestionService(examQ);
-        //getExamDetailById(formExam.examId)
+        getExamDetailById(formExam.examId)
         dialogVisible.value = false
         ElMessage.success('竞赛题目添加成功')
     }catch(error) {
@@ -261,6 +266,7 @@
     const examDetail = await getExamDetailService(examId)
     formExam.examQuestionList = []
     Object.assign(formExam, examDetail.data)
+    console.log(formExam.examQuestionList)
     formExam.examDate = [examDetail.data.startTime, examDetail.data.endTime]
   }
   
