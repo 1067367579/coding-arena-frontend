@@ -147,6 +147,7 @@
         fd.append('startTime', formExam.examDate[0]);
         fd.append('endTime', formExam.examDate[1]);
       } else if (key !== 'startTime' && key !== 'endTime') {
+        //如果原来就已经有startTime endTime 就跳过 还是原始的值 不是编辑之后的值
         fd.append(key, formExam[key])
       }
     }

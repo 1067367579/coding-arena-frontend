@@ -32,11 +32,21 @@ export function addExamQuestionService(data) {
         data
     })
 }
-export function  getExamDetailService() {
-
+export function  getExamDetailService(examId) {
+    return service({
+        url: "/sys/exam/detail",
+        method: "get",
+        params: {
+            examId: examId
+        }
+    })
 } 
-export function editExamService() {
-
+export function editExamService(data) {
+    return service({
+        url: "/sys/exam/edit",
+        method: "put",
+        data
+    })
 }
 export function delExamQuestionService() {
 
