@@ -11,7 +11,7 @@ export function delExamService() {
 
 }
 export function publishExamService() {
-    
+
 } 
 export function cancelPublishExamService() {
 
@@ -25,8 +25,12 @@ export function examAddService(data) {
     })
 } 
 
-export function addExamQuestionService() {
-
+export function addExamQuestionService(data) {
+    return service({
+        url: "/sys/exam/question/add",
+        method: "post",
+        data
+    })
 }
 export function  getExamDetailService() {
 

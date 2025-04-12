@@ -76,7 +76,7 @@
                 </el-form-item>
   
               </el-form>
-              <!-- 题目列表 -->
+              <!-- 题目列表 select事件进行配置-->
               <el-table :data="questionList" @select="handleRowSelect">
                 <el-table-column type="selection"></el-table-column>
                 <el-table-column prop="questionId" label="题目id" />
@@ -156,8 +156,8 @@
             await editExamService(fd)
         } else {
             //没有examId
-            const addRes = await examAddService(fd)
-            formExam.examId = addRes.data
+            const addRes = await examAddService(fd);
+            formExam.examId = addRes.data.examId;
         }
         ElMessage.success('基本信息保存成功')
     } catch(error) {
@@ -228,13 +228,17 @@
     }
     const examQ = reactive({
       examId: formExam.examId,
-      questionIdSet: questionIdSet.value
+      questionIds: questionIdSet.value
     })
     console.log(examQ)
-    await addExamQuestionService(examQ);
-    getExamDetailById(formExam.examId)
-    dialogVisible.value = false
-    ElMessage.success('竞赛题目添加成功')
+    try {
+        await addExamQuestionService(examQ);
+        //getExamDetailById(formExam.examId)
+        dialogVisible.value = false
+        ElMessage.success('竞赛题目添加成功')
+    }catch(error) {
+        ElMessage.error(error.message)
+    }
   }
   
   async function getExamDetail() {
