@@ -146,19 +146,43 @@
   }
   
   async function onDelete(examId) {
-    await delExamService(examId)
-    params.pageNum = 1
-    getExamList()
+    await ElMessageBox.confirm(
+        '确认提示',
+        '温馨提示',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning'
+        }
+    )
+    try {
+        await delExamService(examId)
+        params.pageNum = 1
+        getExamList()
+        ElMessage.success("删除成功")
+    }catch(error) {
+        ElMessage.error(error.message)
+    }
   }
   
   async function publishExam(examId) {
-    await publishExamService(examId)
-    getExamList()
+    try {
+        await publishExamService(examId)
+        getExamList()
+        ElMessage.success("发布成功")
+    } catch(error) {
+        ElMessage.error(error.message)
+    }
   }
   
   async function cancelPublishExam(examId) {
-    await cancelPublishExamService(examId)
-    getExamList()
+    try {
+        await cancelPublishExamService(examId)
+        getExamList()
+        ElMessage.success("撤销发布成功")
+    } catch(error) {
+        ElMessage.error(error.message)
+    }
   }
   
   </script>

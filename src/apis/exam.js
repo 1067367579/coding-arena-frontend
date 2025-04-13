@@ -7,14 +7,32 @@ export function getExamListService(params) {
         params
     })
 }
-export function delExamService() {
-
+export function delExamService(examId) {
+    return service({
+        url: "/sys/exam/delete",
+        method: "delete",
+        params: {
+            examId: examId
+        }
+    })
 }
-export function publishExamService() {
-
+export function publishExamService(examId) {
+    return service({
+        url: "/sys/exam/publish",
+        method: "put",
+        params: {
+            examId: examId
+        }
+    })
 } 
-export function cancelPublishExamService() {
-
+export function cancelPublishExamService(examId) {
+    return service({
+        url: "/sys/exam/publish/cancel",
+        method: "put",
+        params: {
+            examId: examId
+        }
+    })
 }
 
 export function examAddService(data) {

@@ -124,7 +124,8 @@
   const formExam = reactive({
     examId: '',
     title: '',
-    examDate: ''
+    examDate: '',
+    examQuestionList: []
   })
   
   const params = reactive({
@@ -171,9 +172,11 @@
   const total = ref(0)
   async function getQuestionList() {
     params.excludeIdSetStr = '';
-    formExam.examQuestionList.forEach(element => {
-        params.excludeIdSetStr = params.excludeIdSetStr + element.questionId + ";"
-    })
+    if(formExam.examQuestionList!=null && formExam.examQuestionList.length>0) {
+        formExam.examQuestionList.forEach(element => {
+            params.excludeIdSetStr = params.excludeIdSetStr + element.questionId + ";"
+        })
+    }
     const result = await getQuestionListService(params)
     console.log(result)
     questionList.value = result.rows
@@ -214,8 +217,17 @@
   }
   
   async function publishExam() {
-    await publishExamService(formExam.examId)
-    router.push("/oj/layout/exam")
+    try {
+        if(formExam.examId) {
+            await publishExamService(formExam.examId)
+            router.push("/oj/layout/exam")
+            ElMessage.success("发布成功")
+        } else {
+            ElMessage.error("竞赛保存之后方可发布");
+        }
+    } catch(error) {
+        ElMessage.error(error.message);
+    }
   }
   
   const questionIdSet = ref([])
@@ -248,10 +260,14 @@
   }
   
   async function getExamDetail() {
-    const examId = useRoute().query.examId
-    if (examId) {
-      formExam.examId = examId
-      getExamDetailById(examId)
+    try {
+        const examId = useRoute().query.examId
+        if (examId) {
+        formExam.examId = examId
+        getExamDetailById(examId)
+        }
+    } catch(error) {
+        ElMessage.error(error.message)
     }
   }
   getExamDetail()
