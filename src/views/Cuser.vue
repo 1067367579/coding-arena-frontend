@@ -20,6 +20,7 @@
         <template #default="{ row }">
           <div v-if="row.gender === 1" style="color:#3EC8FF;">男</div>
           <div v-if="row.gender === 0" style="color:#FD4C40;">女</div>
+          <div v-if="row.gender === 2" style="color:blue;">未知</div>
         </template>
       </el-table-column>
       <el-table-column prop="phone" width="120px" label="手机号" />
@@ -67,9 +68,13 @@
   const total = ref(0)
   
   async function getUserList() {
-    const ref = await getUserListService(params)
-    userList.value = ref.rows
-    total.value = ref.total
+    try {
+      const ref = await getUserListService(params)
+      userList.value = ref.rows
+      total.value = ref.total
+    } catch(error) {
+      ElMessage.error(error.message);
+    }
   }
   getUserList()
   

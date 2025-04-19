@@ -44,7 +44,7 @@ async function login() {
         const loginRes = await loginService(userAccount.value,password.value);
         console.log(loginRes);
         setToken(loginRes.data);
-        router.push("/oj/layout");
+        router.push("/oj/layout/cuser");
     } catch(error) {
         console.log(error)
     }

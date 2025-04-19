@@ -51,7 +51,7 @@ router.beforeEach((to,from,next)=> {
     //都存了token就不用登录了 直接跳到layout
     if(to.path === '/oj/login') {
       next({
-        path: '/oj/layout'
+        path: '/oj/layout/cuser'
       });
     } else {
       //不是登录页 并且已经有令牌 执行即可
